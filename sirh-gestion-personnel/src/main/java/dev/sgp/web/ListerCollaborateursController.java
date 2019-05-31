@@ -8,7 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dev.sgp.service.CollaborateurService;
+import dev.sgp.util.Constantes;
+
 public class ListerCollaborateursController extends HttpServlet {
+	
+	// Récupération du Service
+	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,7 +38,7 @@ public class ListerCollaborateursController extends HttpServlet {
 		
 		
 		// Envoyer une information de la servlet vers la JSP
-				req.setAttribute("listeNoms", Arrays.asList("Robert","Jean","Hugues"));
+		req.setAttribute("listeNoms", collabService.listerCollaborateurs());
 		// Rattachement  de la page jsp correspondante
 		req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp").forward(req, resp);
 		
