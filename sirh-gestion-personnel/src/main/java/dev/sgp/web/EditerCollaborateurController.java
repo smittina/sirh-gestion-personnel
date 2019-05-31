@@ -66,10 +66,10 @@ public class EditerCollaborateurController extends HttpServlet {
 			String prenomParam = req.getParameter("prenom");
 			resp.setStatus(200);
 			resp.setContentType("text/html");
-			resp.getWriter().write("<p>matricule : "+matriculeParam+"</p>"
-					+ "<p> titre : "+titreParam+"</p>"
-					+ "<p> nom : "+ nomParam+"</p>"
-					+ "<p> prenom : "+ prenomParam+"</p>");
+			resp.getWriter().write("<h2>Création d'un collaborateur avec les informations suivantes : </h2><p>matricule = "+matriculeParam+"</p>"
+					+ "titre = "+titreParam+", "
+					+ "nom = "+ nomParam+", "
+					+ "prenom = "+ prenomParam);
 		}
 		else {
 			resp.setStatus(400);
