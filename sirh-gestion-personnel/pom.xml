@@ -7,6 +7,12 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>sirh-gestion-personnel Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  
+  <properties>  
+  	<!-- Forcer l'utilisation de Java 8 et Etre en UTF-8 -->
+  	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  		
+  </properties>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
