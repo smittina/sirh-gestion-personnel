@@ -17,6 +17,9 @@ public class Collaborateur {
 	private boolean actif;
 	private String intitulePoste;
 	private Departement departement;
+	private String banque;
+	private String bic;
+	private String iban;
 	
 	private static int cpt_collab = 0;
 	
@@ -52,6 +55,29 @@ public class Collaborateur {
 		this.actif = actif;
 		this.intitulePoste = intitulePoste;
 		this.departement = departement;
+		
+		cpt_collab++;
+	}
+
+	public Collaborateur(String matricule, String nom, String prenom, LocalDate dateDeNaissance, String adresse,
+			String numSecuriteSocial, String emailPro, String photo, ZonedDateTime dateHeureCreation, boolean actif, String intitulePoste, Departement departement,
+			String banque, String bic, String iban) {
+		super();
+		this.matricule = matricule;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.dateDeNaissance = dateDeNaissance;
+		this.adresse = adresse;
+		this.numSecuriteSocial = numSecuriteSocial;
+		this.emailPro = emailPro;
+		this.photo = photo;
+		this.dateHeureCreation = dateHeureCreation;
+		this.actif = actif;
+		this.intitulePoste = intitulePoste;
+		this.departement = departement;
+		this.banque = banque;
+		this.bic = bic;
+		this.iban = iban;
 		
 		cpt_collab++;
 	}
@@ -159,6 +185,32 @@ public class Collaborateur {
 	public void setDepartement(Departement departement) {
 		this.departement = departement;
 	}
+
+	public String getBanque() {
+		return banque;
+	}
+
+	public void setBanque(String banque) {
+		this.banque = banque;
+	}
+
+	public String getBic() {
+		return bic;
+	}
+
+	public void setBic(String bic) {
+		this.bic = bic;
+	}
+
+	public String getIban() {
+		return iban;
+	}
+
+	public void setIban(String iban) {
+		this.iban = iban;
+	}
+	
+	
 	
 	
 	

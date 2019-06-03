@@ -10,7 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dev.sgp.entite.Collaborateur;
+import dev.sgp.service.CollaborateurService;
+import dev.sgp.util.Constantes;
+
 public class EditerCollaborateurController extends HttpServlet {
+	
+	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,8 +27,14 @@ public class EditerCollaborateurController extends HttpServlet {
 		if(req.getParameterMap().containsKey("matricule")) {
 			String matriculeParam = req.getParameter("matricule");
 			resp.setStatus(200);
-			resp.setContentType("text/html");
-			resp.getWriter().write("<h1>Edition de collaborateur</h1>"+"<p>Matricule"+matriculeParam+"</p>");
+			Collaborateur leCollaborateur = collabService.findByMatricule(matriculeParam);
+			req.setAttribute("leCollaborateur", leCollaborateur);
+			System.out.println("Le Collaborateur "+leCollaborateur.getNom());
+			req.getRequestDispatcher("/WEB-INF/views/collab/editerCollaborateur.jsp").forward(req, resp);
+
+			
+			/*resp.setContentType("text/html");
+			resp.getWriter().write("<h1>Edition de collaborateur</h1>"+"<p>Matricule"+matriculeParam+"</p>");*/
 			
 		}
 		else {

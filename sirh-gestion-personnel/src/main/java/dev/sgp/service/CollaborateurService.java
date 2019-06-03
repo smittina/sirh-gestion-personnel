@@ -26,5 +26,15 @@ public class CollaborateurService {
 		}
 		return liste;
 	}
+	
+	public Collaborateur findByMatricule(String matricule) {
+		Collaborateur collab = null;
+		for(Collaborateur c : listeCollaborateurs) {
+			if(matricule.equals(c.getMatricule())) {
+				collab = c;
+			}
+		}
+		return collab;
+	}
 
 }

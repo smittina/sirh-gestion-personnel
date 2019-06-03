@@ -1,6 +1,8 @@
 <%@page import="java.util.List" %>
 <%@page import="dev.sgp.entite.Collaborateur" %>
 <%@page import="dev.sgp.entite.Departement" %>
+<%@page isELIgnored='false' %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -39,14 +41,9 @@
 			    <div class="col-md-3">
 			      <select>
 			      	<option selected>Tous</option>
-			      	<%
-						List<Departement> listeDepartements = (List<Departement>) request.getAttribute("listeDepartements");
-						for(Departement d : listeDepartements){
-					%>
-						<option><%=d.getNom() %> </option>
-					<%
-						}
-					%>
+			      	<c:forEach var="dep" items="${listeDepartements}"  >
+  						 <option value="<c:out value="${dep.nom}"/>"><c:out value="${dep.nom}"/></option>
+			      	</c:forEach>
 			      </select>
 			    </div>
 		  </div>
@@ -54,32 +51,28 @@
 		<br/>
 			<!-- Liste des différents utilisateurs -->
 			<div class="row">
-				<%
-					List<Collaborateur> listeNoms = (List<Collaborateur>) request.getAttribute("listeNoms");
-					for(Collaborateur c : listeNoms){
-				%>
+					<c:forEach var="col" items="${listeNoms}"  >
+			      	
 					<div class="col-md-6 col-lg-4 mb-3">
 						<div class="card d-flex align-items-center justify-content-center" style="width: 20rem;">		
-					 		<h5 class="card-title text-center"><%=c.getNom()%> <%=c.getPrenom() %></h5>
+					 		<h5 class="card-title text-center"><c:out value="${col.nom}"/> <c:out value="${col.prenom}"/></h5>
 					 		<div class="row">
 						 		<div class="col-md-2">
-						 			<img class="card-img-left" src="<%=request.getContextPath() %>/img/<%=c.getPhoto() %>" width=50px height=50px alt="Card image cap">
+						 			<img class="card-img-left" src="<%=request.getContextPath() %>/img/profil.png" width=50px height=50px alt="Card image cap">
 						 		</div>
 			 			 		<div class="col-md-10">
 				 			 		<div class="card-body">
-							    		<p class="card-text">Fonction : <%=c.getIntitulePoste() %></p>
-							    		<p class="card-text">Departement : <%=c.getDepartement().getNom() %></p>
-							    		<p class="card-text">Email : <%=c.getEmailPro() %></p>    						    
+							    		<p class="card-text">Fonction : <c:out value="${col.intitulePoste}"/> </p>
+							    		<p class="card-text">Departement : <c:out value="${col.departement.nom}"/></p>
+							    		<p class="card-text">Email : <c:out value="${col.emailPro}"/></p>    						    
 							    		<button href="#" class="btn btn-secondary">Editer</a>
 				  					</div>
 			 			 		</div>
 			 			 	</div>
 			 			 </div>
 					 </div>	 	
-					
-				<%
-					}
-				%>
+					</c:forEach>
+				
 			
 			</div>
 			
