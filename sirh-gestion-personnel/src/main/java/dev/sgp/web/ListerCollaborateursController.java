@@ -9,12 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dev.sgp.service.CollaborateurService;
+import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes;
 
 public class ListerCollaborateursController extends HttpServlet {
 	
 	// Récupération du Service
 	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	private DepartementService departService = Constantes.DEPART_SERVICE;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,14 +41,26 @@ public class ListerCollaborateursController extends HttpServlet {
 		
 		// Envoyer une information de la servlet vers la JSP
 		req.setAttribute("listeNoms", collabService.listerCollaborateurs());
+		req.setAttribute("listeDepartements", departService.listerDepartements() );
 		// Rattachement  de la page jsp correspondante
 		req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp").forward(req, resp);
 		
-		
-		
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String rechercheParam = req.getParameter("recherche");
+		if(rechercheParam !=null) {
+			// Envoyer une information de la servlet vers la JSP
+			req.setAttribute("listeNoms", collabService.findByLettre(rechercheParam));
+			req.setAttribute("listeDepartements", departService.listerDepartements() );
+			// Rattachement  de la page jsp correspondante
+			req.getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp").forward(req, resp);
+		}
 		
 		
 	}
+	
 	
 	
 	

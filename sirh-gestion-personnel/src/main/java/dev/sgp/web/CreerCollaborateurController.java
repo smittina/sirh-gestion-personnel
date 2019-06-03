@@ -13,13 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dev.sgp.entite.Collaborateur;
+import dev.sgp.entite.Departement;
 import dev.sgp.service.CollaborateurService;
+import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes;
 
 public class CreerCollaborateurController extends HttpServlet {
 	
 	// Récupération du Service
 	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+
+	private DepartementService departService = Constantes.DEPART_SERVICE;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,27 +56,30 @@ public class CreerCollaborateurController extends HttpServlet {
 			e.printStackTrace();
 		}
 	    String emailPro = prenom.toLowerCase()+"."+nom.toLowerCase()+"@"+prop.getProperty("societe");
-
+	    String fonction = "Non Renseigné";
+	    Departement dep = new Departement(1,"Comptabilité");
 		// Photo fictive par défaut ??
-	    String photo = "maphoto.jpg";
+	    String photo = "profil.png";
 		// Collaborateur actif par défaut
 		boolean actif = true;
 		// Numéro de sécu = 15 chiffres
 	    if(numSecuriteSociale.length() != 15) {
 			// ERREUR DE SAISIE ==> Code 400
-	    	resp.setStatus(400);
+	    	resp.sendError(400, "La taille du numéro de sécurité social est incorrecte");
 	    	
 	    }
 	    else {
 	    	// Création du collaborateur
-			Collaborateur newCollab = new Collaborateur(matricule, nom, prenom, dateDeNaissance, adresse, numSecuriteSociale, emailPro, photo, dateHeureCreation, actif);
+			Collaborateur newCollab = new Collaborateur(matricule, nom, prenom, dateDeNaissance, adresse, numSecuriteSociale, emailPro, photo, dateHeureCreation, actif, fonction, dep);
 			// Enregistrement dans la Liste des Collaborateurs
 			collabService.sauvegarderCollaborateur(newCollab);
 			System.out.println("Taille de collabService :"+collabService.listerCollaborateurs().size());
 			// Sauvegarde ==> Redirection verss la liste des collaborateurs
 			req.setAttribute("listeNoms", collabService.listerCollaborateurs());
-			getServletContext().getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp").forward(req, resp);
-			
+			req.setAttribute("listeDepartements", departService.listerDepartements() );
+
+			//this.getServletContext().getRequestDispatcher("/WEB-INF/views/collab/listerCollaborateurs.jsp").forward(req, resp);
+			resp.sendRedirect(req.getContextPath()+"/collaborateurs/lister");
 	    }
 		
 	    
